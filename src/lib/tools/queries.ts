@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { getForecastByLocation } from "./api";
+
+import { getForecastByLocation, getLocationsBySearch } from "./api";
 import { Coord } from "../types/weather.type";
 
 export const useForecastByLocation = (location: Coord | null) => {
@@ -11,3 +12,10 @@ export const useForecastByLocation = (location: Coord | null) => {
     },
   });
 }
+
+export const useSearchByLocation = (searchString: string) => {
+  return useQuery({
+    queryKey: ["search_by_location", searchString],
+    queryFn: () => getLocationsBySearch(searchString),
+  });
+};

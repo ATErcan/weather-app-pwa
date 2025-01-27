@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { OPEN_WEATHER_API_URL } from "../constants/api";
-import { ForecastResponse } from "../types/responses/responses.type";
+
+import { LOCATION_LIMIT, OPEN_WEATHER_API_URL } from "../constants/api";
+import { ForecastResponse, LocationResponse } from "../types/responses/responses.type";
 import { Coord } from "../types/weather.type";
 
 const WEATHER_API = axios.create({
@@ -30,13 +31,19 @@ export const fetchData = async <T>(
 };
 
 export const getForecastByCity = async (city: string) => {;
-  const url = `weather?q=${city}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
+  const url = `data/2.5/weather?q=${city}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
   return response;
 }
 
 export const getForecastByLocation = async (location: Coord) => {  
-  const url = `weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
+  const url = `data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
   return response;
 }
+
+export const getLocationsBySearch = async (query: string) => {
+  const url = `geo/1.0/direct?q=${query}&limit=${LOCATION_LIMIT}&appid=${process.env.OPEN_WEATHER_API_KEY}`;
+  const response = await fetchData<LocationResponse>(url);
+  return response;
+} 

@@ -1,3 +1,4 @@
+import { Location } from "../location.type";
 import { Clouds, Coord, Main, Sys, Weather, Wind } from "../weather.type";
 
 export interface ForecastResponse {
@@ -15,3 +16,5 @@ export interface ForecastResponse {
   name: string;
   cod: number;
 }
+
+export type LocationResponse = Location[]
