@@ -1,14 +1,10 @@
 import LocationForecast from "@/components/LocationForecast";
 import SearchBar from "@/components/SearchBar";
 import SearchByLocation from "@/components/SearchByLocation";
+import { SearchParamsProps } from "@/lib/types/props.type";
 
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export default async function Home({ searchParams }: Props) {
+export default async function Home({ searchParams }: SearchParamsProps) {
   const searchQuery = await searchParams?.search;
-  console.log(searchQuery)
 
   return (
     <div className="min-h-screen bg-zinc-950 px-2 py-4 font-[family-name:var(--font-geist-sans)] sm:px-6 md:py-6 md:px-7">
