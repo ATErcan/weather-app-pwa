@@ -24,5 +24,5 @@ export default function LocationForecast() {
 
   if(!data) return <div>Weather forecast of your current location could not be fetched. Please make sure location permission is enabled on your browser.</div>
 
-  return <WeatherCard data={data} bgImage={WeatherConditionImage[data.weather[0].main as keyof typeof WeatherConditionImage]} />
+  return <WeatherCard data={data} />
 }

@@ -10,7 +10,7 @@ export default function SearchResult({ location }: { location: Location}) {
         href={`/location?lat=${lat}&lon=${lon}`}
         className="block py-3 px-4 hover:bg-zinc-800"
       >
-        {name}, {state && state}, {country}
+        {name}, {state && `${state},`} {country}
       </Link>
     </li>
   );

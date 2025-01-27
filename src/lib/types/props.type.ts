@@ -1,5 +1,4 @@
 import { ForecastResponse } from "./responses/responses.type";
-import { WeatherConditionImage } from "./weather.type";
 
 export type SearchParamsProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -7,5 +6,18 @@ export type SearchParamsProps = {
 
 export interface IWeatherCardProps {
   data: ForecastResponse;
-  bgImage: WeatherConditionImage;
+}
+
+export interface IWeatherDetailsCardProps {
+  icon: string;
+  title: string;
+  measure: string;
+  desc: string;
+}
+
+export interface ILocationDetailsCardProps {
+  lon: number;
+  lat: number;
+  name: string;
+  country: string;
 }
