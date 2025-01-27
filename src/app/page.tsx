@@ -1,9 +1,10 @@
-import Image from "next/image";
-
 import LocationForecast from "@/components/LocationForecast";
-import { Input } from "@/components/ui/input";
+import SearchBar from "@/components/SearchBar";
+import SearchByLocation from "@/components/SearchByLocation";
+import { SearchParamsProps } from "@/lib/types/props.type";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const searchQuery = await searchParams?.search;
 
   return (
     <div className="min-h-screen bg-zinc-950 px-2 py-4 font-[family-name:var(--font-geist-sans)] sm:px-6 md:py-6 md:px-7">
@@ -13,28 +14,19 @@ export default async function Home() {
         </h1>
       </header>
       <section className="my-2 max-w-[75rem] mx-auto">
-        <div className="flex items-center border-2 border-gray-200 px-2 rounded-2xl sm:max-w-96">
-          <Image
-            src={"/icons/search.svg"}
-            alt="Search-icon"
-            width={20}
-            height={20}
-          />
-          <Input
-            name="search"
-            className="border-none text-white focus-visible:ring-0"
-          />
-          <Image
-            src={"/icons/mic.svg"}
-            alt="Search-icon"
-            width={20}
-            height={20}
-          />
-        </div>
+        <SearchBar />
       </section>
-      <main className="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 max-w-[75rem] mx-auto">
-        <LocationForecast />
-      </main>
+      {searchQuery ? (
+        <section className="my-2 max-w-[75rem] mx-auto">
+          <SearchByLocation
+            searchQuery={typeof searchQuery === "string" ? searchQuery : ""}
+          />
+        </section>
+      ) : (
+        <main className="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 max-w-[75rem] mx-auto">
+          <LocationForecast />
+        </main>
+      )}
     </div>
   );
 }

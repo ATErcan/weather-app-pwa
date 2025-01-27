@@ -11,8 +11,6 @@ export default function LocationForecast() {
 
   const { data, isLoading, isError } = useForecastByLocation(location);
 
-  console.log(data, isLoading, isError);
-
   useEffect(() => {
     if('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
