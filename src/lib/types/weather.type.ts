@@ -47,3 +47,13 @@ export enum WeatherCondition {
   Clear = "Sunny",
   Clouds = "Cloudy",
 }
+
+export enum WeatherConditionImage {
+  Thunderstorm = "/images/thunderstorm.jpg",
+  Drizzle = "/images/drizzle.jpg",
+  Rain = "/images/rainy.jpg",
+  Snow = "/images/snowy.jpg",
+  Atmosphere = "/images/fog.jpg",
+  Clear = "/images/clear.jpg",
+  Clouds = "/images/cloudy.jpg"
+}

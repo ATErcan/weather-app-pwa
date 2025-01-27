@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Coord } from "@/lib/types/weather.type";
+import { Coord, WeatherConditionImage } from "@/lib/types/weather.type";
 import { useForecastByLocation } from "@/lib/tools/queries";
 import WeatherCard from "./WeatherCard";
 
@@ -26,5 +26,5 @@ export default function LocationForecast() {
 
   if(!data) return <div>Weather forecast of your current location could not be fetched. Please make sure location permission is enabled on your browser.</div>
 
-  return <WeatherCard data={data} />
+  return <WeatherCard data={data} bgImage={WeatherConditionImage[data.weather[0].main as keyof typeof WeatherConditionImage]} />
 }
