@@ -1,21 +1,28 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Input } from "./ui/input";
+import useDebounce from "@/lib/hooks/useDebounce";
 
 export default function SearchBar() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const [searchInput, setSearchInput] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement >) => {
-    const { value } = e.target
-    if(value.trim()) {
-      router.push(`?search=${e.target.value}`);
+  const debouncedSearch = useDebounce(searchInput, 500);
+
+  useEffect(() => {
+    if (debouncedSearch.trim()) {
+      router.push(`?search=${debouncedSearch.trim()}`);
     } else {
       router.push("/");
     }
+  }, [debouncedSearch, router]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement >) => {
+    setSearchInput(e.target.value);
   }
   return (
     <div className="flex items-center border-2 border-gray-200 px-2 rounded-2xl sm:max-w-96">
@@ -29,7 +36,7 @@ export default function SearchBar() {
         name="search"
         className="border-none text-white focus-visible:ring-0"
         onChange={handleChange}
-        value={searchParams.get("search") ?? ""}
+        value={searchInput}
       />
       <Image src={"/icons/mic.svg"} alt="Search-icon" width={20} height={20} />
     </div>
