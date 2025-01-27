@@ -57,3 +57,8 @@ export enum WeatherConditionImage {
   Clear = "/images/clear.jpg",
   Clouds = "/images/cloudy.jpg"
 }
+
+export type Time = {
+  dt: number;
+  timezone: number;
+}

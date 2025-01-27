@@ -3,11 +3,10 @@ import Image from "next/image";
 import { OPEN_WEATHER_API_ICONS_URL } from "@/lib/constants/api";
 import { IWeatherCardProps } from "@/lib/types/props.type";
 import { WeatherCondition } from "@/lib/types/weather.type";
-import { getCurrentTime } from "@/utils/helperFunctions";
+import Clock from "./Clock";
 
 export default function WeatherCard({ data, bgImage }: IWeatherCardProps) {
-  const time = getCurrentTime(data);
-  const { name, weather, main: { temp, temp_max, temp_min } } = data;
+  const { name, weather, main: { temp, temp_max, temp_min }, dt, timezone } = data;
   const { main, icon } = weather[0];
 
   const backgroundStyle = {
@@ -24,7 +23,7 @@ export default function WeatherCard({ data, bgImage }: IWeatherCardProps) {
       <div className="flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-medium">{name}</h2>
-          <p className="text-sm">{time}</p>
+          <Clock dt={dt} timezone={timezone} />
         </div>
         <div className="flex items-center">
           <Image
