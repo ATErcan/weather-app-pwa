@@ -38,25 +38,45 @@ export interface Sys {
   sunset: number;
 }
 
-export enum WeatherCondition {
-  Thunderstorm = "Stormy",
-  Drizzle = "Light Rain",
-  Rain = "Rainy",
-  Snow = "Snowy",
-  Atmosphere = "Foggy",
-  Clear = "Sunny",
-  Clouds = "Cloudy",
-}
+export const WeatherCondition: Record<string, string> = {
+  Thunderstorm: "Stormy",
+  Drizzle: "Light Rain",
+  Rain: "Rainy",
+  Snow: "Snowy",
+  Clear: "Sunny",
+  Clouds: "Cloudy",
+  
+  Atmosphere: "Foggy",
+  Mist: "Foggy",
+  Smoke: "Foggy",
+  Haze: "Foggy",
+  Dust: "Foggy",
+  Fog: "Foggy",
+  Sand: "Foggy",
+  Ash: "Foggy",
+  Squall: "Foggy",
+  Tornado: "Foggy",
+};
 
-export enum WeatherConditionImage {
-  Thunderstorm = "/images/thunderstorm.jpg",
-  Drizzle = "/images/drizzle.jpg",
-  Rain = "/images/rainy.jpg",
-  Snow = "/images/snowy.jpg",
-  Atmosphere = "/images/fog.jpg",
-  Clear = "/images/clear.jpg",
-  Clouds = "/images/cloudy.jpg"
-}
+export const WeatherConditionImage: Record<string, string> = {
+  Thunderstorm: "/images/thunderstorm.jpg",
+  Drizzle: "/images/drizzle.jpg",
+  Rain: "/images/rainy.jpg",
+  Snow: "/images/snowy.jpg",
+  Clear: "/images/clear.jpg",
+  Clouds: "/images/cloudy.jpg",
+
+  Atmosphere: "/images/fog.jpg",
+  Mist: "/images/fog.jpg",
+  Smoke: "/images/fog.jpg",
+  Haze: "/images/fog.jpg",
+  Dust: "/images/fog.jpg",
+  Fog: "/images/fog.jpg",
+  Sand: "/images/fog.jpg",
+  Ash: "/images/fog.jpg",
+  Squall: "/images/fog.jpg",
+  Tornado: "/images/fog.jpg",
+};
 
 export type Time = {
   dt: number;

@@ -1,13 +1,11 @@
 'use client';
 
-import useDebounce from "@/lib/hooks/useDebounce";
 import { useSearchByLocation } from "@/lib/tools/queries";
 import SearchResult from "./SearchResult";
 import Spinner from "./ui/Spinner";
 
 export default function SearchByLocation({ searchQuery }: { searchQuery: string }) {
-  const debouncedSearch = useDebounce(searchQuery.trim(), 1000);
-  const { data, isLoading } = useSearchByLocation(debouncedSearch);
+  const { data, isLoading } = useSearchByLocation(searchQuery);
 
   if(isLoading) {
     return (
@@ -18,10 +16,17 @@ export default function SearchByLocation({ searchQuery }: { searchQuery: string 
   }
 
   return (
-      <ul className="text-white list-none flex flex-col w-full sm:max-w-96">
-        {data?.map(location => (
-          <SearchResult key={`${location.lat}-${location.lon}`} location={location} />
-        ))}
-      </ul>
+    <ul className="text-white list-none flex flex-col w-full sm:max-w-96">
+      {data?.length === 0 ? (
+        <li className="block py-3 px-4">- No result -</li>
+      ) : (
+        data?.map((location, index) => (
+          <SearchResult
+            key={`${location.lat}-${location.lon}-${index}`}
+            location={location}
+          />
+        ))
+      )}
+    </ul>
   );
 }

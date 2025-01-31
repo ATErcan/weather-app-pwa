@@ -11,7 +11,6 @@ export default async function Location({ searchParams }: SearchParamsProps) {
   }
 
   const data = await getForecastByLocation({ lon: parseFloat(lon), lat: parseFloat(lat) });
-  console.log(data)
   return (
     <ForecastByCoord data={data} />
   )

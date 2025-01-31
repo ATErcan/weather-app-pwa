@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Coord, WeatherConditionImage } from "@/lib/types/weather.type";
+import { Coord } from "@/lib/types/weather.type";
 import { useForecastByLocation } from "@/lib/tools/queries";
 import WeatherCard from "./WeatherCard";
 

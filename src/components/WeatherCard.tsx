@@ -9,7 +9,7 @@ export default function WeatherCard({ data }: IWeatherCardProps) {
   const { name, weather, main: { temp, temp_max, temp_min }, dt, timezone } = data;
   const { main, icon } = weather[0];
 
-  const bgImage = WeatherConditionImage[data.weather[0].main as keyof typeof WeatherConditionImage];
+  const bgImage = WeatherConditionImage[data.weather[0].main];
 
   const backgroundStyle = {
     backgroundImage: `url(${bgImage}`
@@ -33,7 +33,7 @@ export default function WeatherCard({ data }: IWeatherCardProps) {
             height={25}
           />
           <p className="text-sm">
-            {WeatherCondition[main as keyof typeof WeatherCondition]}
+            {WeatherCondition[main]}
           </p>
         </div>
       </div>

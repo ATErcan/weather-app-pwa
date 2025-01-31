@@ -1,4 +1,5 @@
 import { ForecastResponse } from "./responses/responses.type";
+import { Coord } from "./weather.type";
 
 export type SearchParamsProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -20,4 +21,8 @@ export interface ILocationDetailsCardProps {
   lat: number;
   name: string;
   country: string;
+}
+
+export interface IToggleStoreBtnProps extends Coord{
+  id: number
 }

@@ -7,9 +7,11 @@ import { getFeelsLikeDesc, getHumidityDesc, getVisibilityDesc, getWindDesc } fro
 import WeatherDetailsCard from "./cards/WeatherDetailsCard";
 import { formatAsHourAndMinutes, getCurrentTime } from "@/utils/helperFunctions";
 import LocationDetailsCard from "./cards/LocationDetailsCard";
+import ToggleStoreBtn from "./ToggleStoreBtn";
 
 export default function ForecastByCoord({ data }: IWeatherCardProps) {
   const {
+    id,
     coord: { lat, lon },
     name,
     weather,
@@ -21,7 +23,7 @@ export default function ForecastByCoord({ data }: IWeatherCardProps) {
   } = data;
   const { main } = weather[0];
 
-  const bgImage = WeatherConditionImage[data.weather[0].main as keyof typeof WeatherConditionImage];
+  const bgImage = WeatherConditionImage[data.weather[0].main];
   const backgroundStyle = {
     backgroundImage: `url(${bgImage}`
   };
@@ -55,14 +57,7 @@ export default function ForecastByCoord({ data }: IWeatherCardProps) {
             height={32}
           />
         </Link>
-        <div className="w-10 h-10 flex justify-center items-center p-1 bg-zinc-400/30 backdrop-blur-sm rounded-full">
-          <Image
-            src="/icons/plus.svg"
-            alt="back-arrow-icon"
-            width={32}
-            height={32}
-          />
-        </div>
+        <ToggleStoreBtn lat={lat} lon={lon} id={id} />
       </div>
       <header className="text-center text-zinc-800 py-8 max-w-[75rem] mx-auto md:py-14 md:mb-4">
         <h1 className="font-semibold text-2xl sm:text-3xl lg:text-4xl">{name}</h1>
