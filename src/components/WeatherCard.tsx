@@ -11,29 +11,38 @@ export default function WeatherCard({ data, isUserLocation = false }: IWeatherCa
   const { main, icon } = weather[0];
 
   const bgImage = WeatherConditionImage[data.weather[0].main];
-
-  const backgroundStyle = {
-    backgroundImage: `url(${bgImage}`
-  };
   
   return (
     <section
-      className={`h-24 text-white rounded-2xl bg-cover bg-center hover:opacity-80`}
-      style={backgroundStyle}
+      className={`h-24 text-white rounded-2xl relative hover:opacity-80`}
     >
+      <Image
+        src={bgImage}
+        alt={main}
+        fill
+        priority
+        className="object-cover rounded-2xl"
+        sizes="(max-width: 640px) 100vw, 
+              (max-width: 768px) 50vw,
+              (max-width: 1280px) 33vw,
+              33vw"
+      />
       <Link
         href={`/location?lat=${lat}&lon=${lon}`}
-        className="flex justify-between px-3 py-2 rounded-2xl"
+        className="flex justify-between px-3 py-2 rounded-2xl cursor-pointer absolute z-10 inset-0"
       >
         <div className="flex flex-col justify-between">
           <div>
             <div className="flex gap-1 items-center">
-              {isUserLocation && <Image 
-                src="/icons/maps-icon.png"
-                alt="location-icon"
-                width={12}
-                height={12}
-              />}
+              {isUserLocation && (
+                <Image
+                  src="/icons/maps-icon.png"
+                  alt="location-icon"
+                  width={12}
+                  height={12}
+                  className="w-auto h-auto"
+                />
+              )}
               <h2 className="text-lg font-medium">{name}</h2>
             </div>
             <Clock dt={dt} timezone={timezone} />
