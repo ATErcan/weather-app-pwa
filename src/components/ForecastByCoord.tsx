@@ -5,7 +5,7 @@ import { IWeatherCardProps } from "@/lib/types/props.type";
 import { WeatherConditionImage } from "@/lib/types/weather.type";
 import { getFeelsLikeDesc, getHumidityDesc, getVisibilityDesc, getWindDesc } from "@/utils/cardsDesc";
 import WeatherDetailsCard from "./cards/WeatherDetailsCard";
-import { formatAsHourAndMinutes, getCurrentTime } from "@/utils/helperFunctions";
+import { formatSunriseAndSunset, getCurrentTime } from "@/utils/helperFunctions";
 import LocationDetailsCard from "./cards/LocationDetailsCard";
 import ToggleStoreBtn from "./ToggleStoreBtn";
 
@@ -33,10 +33,10 @@ export default function ForecastByCoord({ data }: IWeatherCardProps) {
   const visibilityDesc = getVisibilityDesc(visibility);
   const windDesc = getWindDesc(speed);
 
-  const sunriseTime = formatAsHourAndMinutes(
+  const sunriseTime = formatSunriseAndSunset(
     getCurrentTime({ dt: sunrise, timezone })
   );
-  const sunsetTime = formatAsHourAndMinutes(
+  const sunsetTime = formatSunriseAndSunset(
     getCurrentTime({ dt: sunset, timezone })
   );
 

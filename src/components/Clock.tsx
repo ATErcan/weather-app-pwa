@@ -1,34 +1,40 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 
 import { Time } from "@/lib/types/weather.type";
-import { formatAsHourAndMinutes, getCurrentTime } from "@/utils/helperFunctions";
+import {
+  formatAsHourAndMinutes,
+  getCurrentTimeWithUserCorrection,
+} from "@/utils/helperFunctions";
 
 export default function Clock({ dt, timezone }: Time) {
-  const [time, setTime] = useState<Date>(() => getCurrentTime({ dt, timezone }));
+  const [time, setTime] = useState<Date>(() =>
+    getCurrentTimeWithUserCorrection({ dt, timezone })
+  );
 
   useEffect(() => {
-    const synchronize = () => {
-      const now = new Date(time);
-      const secondsUntilNextMinute = 60 - now.getSeconds();
-      const nextMinute = now.getTime() + secondsUntilNextMinute * 1000;
+    const updateClock = () => {
+      setTime(getCurrentTimeWithUserCorrection({ dt, timezone }));
+    };
 
-      const timeout = setTimeout(() => {
-        setTime(new Date(nextMinute));
+    updateClock();
 
-        const interval = setInterval(() => {
-          setTime((prevTime) => new Date(prevTime.getTime() + 60000));
-        }, 60000);
+    // Calculate the delay until the next full minute
+    const now = new Date();
+    const secondsUntilNextMinute = 60 - now.getSeconds();
 
-        return () => clearInterval(interval);
-      }, secondsUntilNextMinute * 1000);
+    // Set a timeout to synchronize exactly when the next full minute starts
+    const syncTimeout = setTimeout(() => {
+      updateClock();
 
-      return () => clearTimeout(timeout);
-    }
-    
-    synchronize();
-  }, [time]);
+      const interval = setInterval(updateClock, 60000);
+
+      return () => clearInterval(interval);
+    }, secondsUntilNextMinute * 1000);
+
+    return () => clearTimeout(syncTimeout);
+  }, [dt, timezone]);
 
   const formattedTime = formatAsHourAndMinutes(time);
 
