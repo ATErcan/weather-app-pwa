@@ -9,17 +9,35 @@ import WeatherCardSkeleton from "./ui/skeletons/WeatherCardSkeleton";
 
 export default function LocationForecast() {
   const [location, setLocation] = useState<Coord | null>(null);
+  const [locationError, setLocationError] = useState<boolean>(false); 
 
   useEffect(() => {
-    if('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        const { latitude, longitude } = coords;
-        setLocation({ lat: latitude, lon: longitude })
-      })
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          const { latitude, longitude } = coords;
+          setLocation({ lat: latitude, lon: longitude });
+          setLocationError(false);
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          setLocationError(true);
+        }
+      );
+    } else {
+      setLocationError(true);
     }
   }, [])
   
   const { data, isLoading, isError, isFetching,  } = useForecastByLocation(location);
+
+  if (locationError) return (
+    <div className="h-24 text-white rounded-2xl flex items-center">
+      <p className="text-sm text-center">
+        Location access denied. Please enable location services in your browser settings.
+      </p>
+    </div>
+  );
 
   if (isLoading || isFetching || !location) return <WeatherCardSkeleton />
 
