@@ -6,7 +6,7 @@ import { IWeatherCardProps } from "@/lib/types/props.type";
 import { WeatherCondition, WeatherConditionImage } from "@/lib/types/weather.type";
 import Clock from "./Clock";
 
-export default function WeatherCard({ data }: IWeatherCardProps) {
+export default function WeatherCard({ data, isUserLocation = false }: IWeatherCardProps) {
   const { coord: { lat, lon }, name, weather, main: { temp, temp_max, temp_min }, dt, timezone } = data;
   const { main, icon } = weather[0];
 
@@ -27,7 +27,15 @@ export default function WeatherCard({ data }: IWeatherCardProps) {
       >
         <div className="flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-medium">{name}</h2>
+            <div className="flex gap-1 items-center">
+              {isUserLocation && <Image 
+                src="/icons/maps-icon.png"
+                alt="location-icon"
+                width={12}
+                height={12}
+              />}
+              <h2 className="text-lg font-medium">{name}</h2>
+            </div>
             <Clock dt={dt} timezone={timezone} />
           </div>
           <div className="flex items-center">

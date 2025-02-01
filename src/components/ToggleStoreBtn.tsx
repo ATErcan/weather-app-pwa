@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { IToggleStoreBtnProps } from "@/lib/types/props.type";
 import useLocalStorage from "@/lib/hooks/useLocalStorage";
 import { useQueryClient } from "@tanstack/react-query";
+import ToggleBtnSkeleton from "./ui/skeletons/ToggleBtnSkeleton";
 
 export default function ToggleStoreBtn({ lon, lat, id }: IToggleStoreBtnProps) {
   const { loading, localStore } = useLocalStorage();
@@ -23,9 +24,7 @@ export default function ToggleStoreBtn({ lon, lat, id }: IToggleStoreBtnProps) {
   }, [localStore, id]);
 
   if (loading) {
-    return (
-      <div className="w-10 h-10 flex justify-center items-center p-1 bg-zinc-400/30 backdrop-blur-sm rounded-full animate-pulse"></div>
-    );
+    return <ToggleBtnSkeleton />
   }
 
   const toggleLocation = ({ lon, lat, id }: IToggleStoreBtnProps) => {
