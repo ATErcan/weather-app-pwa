@@ -2,11 +2,12 @@ import { ForecastResponse } from "./responses/responses.type";
 import { Coord } from "./weather.type";
 
 export type SearchParamsProps = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export interface IWeatherCardProps {
   data: ForecastResponse;
+  isUserLocation?: boolean; 
 }
 
 export interface IWeatherDetailsCardProps {
