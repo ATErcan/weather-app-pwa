@@ -1,10 +1,11 @@
 import LocationForecast from "@/components/LocationForecast";
 import SearchBar from "@/components/SearchBar";
 import SearchByLocation from "@/components/SearchByLocation";
+import StoredCards from "@/components/StoredCards";
 import { SearchParamsProps } from "@/lib/types/props.type";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const searchQuery = await searchParams?.search;
+  const searchQuery = (await searchParams).search;
 
   return (
     <div className="min-h-screen bg-zinc-950 px-2 py-4 font-[family-name:var(--font-geist-sans)] sm:px-6 md:py-6 md:px-7">
@@ -25,6 +26,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
       ) : (
         <main className="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 max-w-[75rem] mx-auto">
           <LocationForecast />
+          <StoredCards />
         </main>
       )}
     </div>

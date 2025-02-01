@@ -31,19 +31,19 @@ export const fetchData = async <T>(
 };
 
 export const getForecastByCity = async (city: string) => {;
-  const url = `data/2.5/weather?q=${city}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
+  const url = `data/2.5/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
   return response;
 }
 
 export const getForecastByLocation = async (location: Coord) => {  
-  const url = `data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
+  const url = `data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
   return response;
 }
 
 export const getLocationsBySearch = async (query: string) => {
-  const url = `geo/1.0/direct?q=${query}&limit=${LOCATION_LIMIT}&appid=${process.env.OPEN_WEATHER_API_KEY}`;
+  const url = `geo/1.0/direct?q=${query}&limit=${LOCATION_LIMIT}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`;
   const response = await fetchData<LocationResponse>(url);
   return response;
 } 

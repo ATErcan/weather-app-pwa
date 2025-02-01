@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+
 import "./globals.css";
 import AppProvider from "@/components/providers/AppProvider";
 
@@ -30,6 +32,7 @@ export default function RootLayout({
       >
         <AppProvider>
           {children}
+          <Toaster />
         </AppProvider>          
       </body>
     </html>

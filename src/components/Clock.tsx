@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Time } from "@/lib/types/weather.type";
-import { getCurrentTime } from "@/utils/helperFunctions";
+import { formatAsHourAndMinutes, getCurrentTime } from "@/utils/helperFunctions";
 
 export default function Clock({ dt, timezone }: Time) {
   const [time, setTime] = useState<Date>(() => getCurrentTime({ dt, timezone }));
@@ -30,10 +30,7 @@ export default function Clock({ dt, timezone }: Time) {
     synchronize();
   }, [time]);
 
-  const formattedTime = `${time
-    .getUTCHours()
-    .toString()
-    .padStart(2, "0")}:${time.getUTCMinutes().toString().padStart(2, "0")}`;
+  const formattedTime = formatAsHourAndMinutes(time);
 
   return <p className="text-sm">{formattedTime}</p>;
 }

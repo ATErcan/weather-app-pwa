@@ -1,3 +1,5 @@
+import { Coord } from "./weather.type";
+
 export type LocalNames = {
   [languageCode: string]: string;
 }
@@ -10,3 +12,9 @@ export type Location = {
   country: string;
   state: string | undefined;
 };
+
+export type StoredLocationData = Coord & {
+  id: number;
+}
+
+export type LocationStore = StoredLocationData[]; 
