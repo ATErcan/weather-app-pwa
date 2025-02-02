@@ -60,7 +60,7 @@ export async function sendNotification(message: string) {
           JSON.stringify({
             title: "Weather Alert",
             body: message,
-            icon: "/icons/weather-alert.png",
+            icon: "/icons/weather-alert.webp",
           })
         );
         return { success: true };
