@@ -28,13 +28,14 @@ export default function SearchBar() {
   }
 
   const handleVoiceInput = () => {
-    if(!("webkitSpeechRecognition" in window)) {
+    if (!("webkitSpeechRecognition" in window)) {
       toast.error("Your browser does not support voice input.", {
-        id: "voice-input-not-supported"
+        id: "voice-input-not-supported",
       });
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const SpeechRecognition = (window as any)["webkitSpeechRecognition"];
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
@@ -43,21 +44,25 @@ export default function SearchBar() {
 
     recognition.onstart = () => {
       setIsListening(true);
-    }
+    };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       setSearchInput(transcript);
     };
 
     recognition.onerror = (event: Event) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       console.error("Speech recognition error:", (event as any).error);
-      toast.error("Speech recognition error", { id: "speech-recognition-error" });
-    }
+      toast.error("Speech recognition error", {
+        id: "speech-recognition-error",
+      });
+    };
 
     recognition.onend = () => {
       setIsListening(false);
-    }
+    };
 
     recognition.start();
   }
