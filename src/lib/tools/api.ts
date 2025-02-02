@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { LOCATION_LIMIT, OPEN_WEATHER_API_URL } from "../constants/api";
 import { ForecastResponse, LocationResponse } from "../types/responses/responses.type";
 import { Coord } from "../types/weather.type";
+import { sendNotification } from "@/app/actions";
 
 const WEATHER_API = axios.create({
   baseURL: OPEN_WEATHER_API_URL,
@@ -39,6 +40,14 @@ export const getForecastByCity = async (city: string) => {;
 export const getForecastByLocation = async (location: Coord) => {  
   const url = `data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
+
+  const forecast = response.weather[0].main;
+
+  if (forecast === "Thunderstorm") {
+    await sendNotification(
+      "⚠️ Thunderstorm Alert! Take precautions and stay safe."
+    );
+  }
   return response;
 }
 
