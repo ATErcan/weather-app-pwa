@@ -1,4 +1,5 @@
 import LocationForecast from "@/components/LocationForecast";
+import PWA from "@/components/pwa/PWA";
 import SearchBar from "@/components/SearchBar";
 import SearchByLocation from "@/components/SearchByLocation";
 import StoredCards from "@/components/StoredCards";
@@ -14,6 +15,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           Weather Forecast
         </h1>
       </header>
+      <PWA />
       <section className="my-2 max-w-[75rem] mx-auto">
         <SearchBar />
       </section>
