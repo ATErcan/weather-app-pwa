@@ -5,7 +5,8 @@ const DB_STORE_NAME = "forecasts";
 const urlsToCache = [
   "/",
   "/offline.html",
-  "/icons/weather-alert.webp"
+  "/icons/weather-alert.webp",
+  "/manifest.webmanifest"
 ];
 
 async function cacheCoreAssets() {
@@ -114,7 +115,7 @@ async function cacheFirstStrategy(request) {
     return networkResponse;
   } catch (error) {
     console.error("Cache first strategy failed:", error);
-    return caches.match("/offline");
+    return caches.match("/offline.html");
   }
 }
 
@@ -142,7 +143,15 @@ async function networkFirstStrategy(request) {
       });
     }
 
-    return new Response("[]", { status: 200 });
+    return new Response(
+      JSON.stringify({
+        error: "No network and no cached data available",
+      }),
+      {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
 

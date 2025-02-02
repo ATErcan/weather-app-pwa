@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
           {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
-          },
+          }
         ],
       },
       {
@@ -33,10 +33,11 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self'",
+            value:
+              "default-src 'self'; script-src 'self'; connect-src 'self' https://api.openweathermap.org;",
           },
         ],
-      }
+      },
     ];
   },
   /* config options here */
