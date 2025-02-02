@@ -1,5 +1,6 @@
 import LocationForecast from "@/components/LocationForecast";
-import PWA from "@/components/pwa/PWA";
+import InstallPrompt from "@/components/pwa/InstallPrompt";
+import PushNotificationManager from "@/components/pwa/PushNotificationManager";
 import SearchBar from "@/components/SearchBar";
 import SearchByLocation from "@/components/SearchByLocation";
 import StoredCards from "@/components/StoredCards";
@@ -15,9 +16,10 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           Weather Forecast
         </h1>
       </header>
-      <PWA />
-      <section className="my-2 max-w-[75rem] mx-auto">
+      <InstallPrompt />
+      <section className="my-2 max-w-[75rem] mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
         <SearchBar />
+        <PushNotificationManager />
       </section>
       {searchQuery ? (
         <section className="my-2 max-w-[75rem] mx-auto">

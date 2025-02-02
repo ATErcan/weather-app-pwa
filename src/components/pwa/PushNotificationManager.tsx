@@ -1,7 +1,9 @@
 'use client';
 
-import { sendNotification, subscribeUser, unsubscribeUser } from "@/app/actions";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+import PushNotificationModal from "../ui/modals/PushNotificationModal";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -19,7 +21,6 @@ function urlBase64ToUint8Array(base64String: string) {
 export default function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState<boolean>(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(null);
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if('serviceWorker' in navigator && 'PushManager' in window) {
@@ -45,50 +46,70 @@ export default function PushNotificationManager() {
         process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
       ),
     });
+
+    const keys = {
+      p256dh: sub.getKey("p256dh") && btoa(String.fromCharCode(...new Uint8Array(sub.getKey("p256dh")!))),
+      auth: sub.getKey("auth") && btoa(String.fromCharCode(...new Uint8Array(sub.getKey("auth")!))),
+    };
+
+    const serializedSub = {
+      endpoint: sub.endpoint,
+      keys,
+    };
     setSubscription(sub);
-    const serializedSub = JSON.parse(JSON.stringify(sub));
-    await subscribeUser(serializedSub);
+
+    const response = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(serializedSub),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to store subscription on the server.");
+    } else {
+      toast.success("Subscribed to push notifications!", { id: "subscribe" })
+    }
   }
 
   async function unsubscribeFromPush() {
-    await subscription?.unsubscribe();
-    setSubscription(null);
-    await unsubscribeUser();
-  }
+    if (!subscription) {
+      console.error("No subscription to unsubscribe.");
+      return;
+    }
 
-  async function sendTestNotification() {
-    if(subscription) {
-      await sendNotification(message);
-      setMessage('');
+    await subscription.unsubscribe();
+    setSubscription(null);
+
+    const response = await fetch("/api/unsubscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        endpoint: subscription.endpoint,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to remove subscription from the server.");
+    } else {
+      toast.success("You have unsubscribed from push notifications!", { id: "unsubscribe" });
     }
   }
 
   if(!isSupported) {
-    return <p>Push notifications are not supported in this browser.</p>;
+    return <p className="text-sm text-gray-300">Push notifications are not supported in this browser.</p>;
   }
 
   return (
-    <div className="text-white">
-      <h3>Push Notifications</h3>
-      {subscription ? (
-        <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
-          <input
-            type="text"
-            placeholder="Enter notification message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="text-black"
-          />
-          <button onClick={sendTestNotification}>Send Test</button>
-        </>
-      ) : (
-        <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
-        </>
-      )}
+    <div>
+      <PushNotificationModal
+        subscription={subscription}
+        subscribeToPush={subscribeToPush}
+        unsubscribeFromPush={unsubscribeFromPush}
+      />
     </div>
   );
 }

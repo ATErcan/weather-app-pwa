@@ -16,10 +16,8 @@ export default function InstallPrompt() {
 
   if(isStandalone) return null;
 
-  console.log(isIOS)
-
   return (
-    <div className="max-w-[75rem] mx-auto text-gray-300 text-sm">
+    <div className="max-w-[75rem] mx-auto text-gray-300 text-xs">
       {isIOS && (
         <p>
           To install this app on your iOS device, tap the share button

@@ -27,3 +27,9 @@ export interface ILocationDetailsCardProps {
 export interface IToggleStoreBtnProps extends Coord{
   id: number
 }
+
+export interface IPushNotificationModalProps {
+  subscription: PushSubscription | null;
+  subscribeToPush(): Promise<void>;
+  unsubscribeFromPush(): Promise<void>;
+}
