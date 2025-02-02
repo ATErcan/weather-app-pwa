@@ -63,7 +63,7 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="flex items-center border-2 border-gray-200 px-2 rounded-2xl sm:max-w-96">
+    <div className="flex items-center border-2 border-gray-200 px-2 rounded-2xl flex-1 sm:max-w-96">
       <Image
         src={"/icons/search.svg"}
         alt="Search-icon"
