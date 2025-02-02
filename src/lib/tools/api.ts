@@ -40,10 +40,6 @@ export const getForecastByCity = async (city: string) => {;
 export const getForecastByLocation = async (location: Coord) => {  
   const url = `data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}&units=metric`;
   const response = await fetchData<ForecastResponse>(url);
-  if (!response || !response.weather || response.weather.length === 0) {
-    console.error("Invalid forecast response");
-    return;
-  }
 
   const forecast = response.weather[0].main;
 
