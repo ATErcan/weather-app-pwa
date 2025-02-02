@@ -8,13 +8,7 @@ export const getCurrentTime = ({ dt, timezone }: Time) => {
   return localTime;
 };
 
-export const getCurrentTimeWithUserCorrection = ({ dt, timezone }: Time) => {
-  // Convert API `dt` (UTC) into a UTC Date object
-  const apiTime = new Date(dt * 1000);
-
-  // Convert API time into the target location's correct time using `timezone` offset
-  const locationTime = new Date(apiTime.getTime() + timezone * 1000);
-
+export const getCurrentTimeWithUserCorrection = ({ timezone }: Time) => {
   // Get the user's actual local time
   const userTime = new Date();
 

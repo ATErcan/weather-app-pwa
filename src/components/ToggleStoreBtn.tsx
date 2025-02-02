@@ -17,7 +17,7 @@ export default function ToggleStoreBtn({ lon, lat, id }: IToggleStoreBtnProps) {
   
   useEffect(() => {
     const store = localStore?.getItem("locations");
-    let locations: IToggleStoreBtnProps[] = store ? JSON.parse(store) : [];
+    const locations: IToggleStoreBtnProps[] = store ? JSON.parse(store) : [];
     const exists = locations?.some((location) => location.id === id);
 
     setIsAdded(exists);
